@@ -17,7 +17,6 @@ class StackDataStructure {
   }
 
   push(item) {
-    
     if (this.canPush()) {
       this.stackControl.push(item);
       return this.stackControl;
