@@ -9,29 +9,53 @@ const takeStackBtn = document.getElementById('take-stack');
 const newStack = new StackDataStructure();
 
 const clearStackInput = () => {
-  // ... your code goes here
+  stackInput.value = '';
 };
 
 const renderListStack = () => {
-  // ... your code goes here
+  for (i = 0; i < newStack.MAX_SIZE; i++) {
+    const item = document.createElement('li');
+    item.className = 'inactive';
+    stackList.appendChild(item);
+  }
 };
 
 renderListStack();
 
 const generateWarningStack = type => {
   if (type === 'underflow') {
-    // ... your code goes here
+    warningBottomStack.style.display = 'block';
+    warningBottomStack.innerHTML = 'underflow';
   } else if (type === 'overflow') {
-    // ... your code goes here
+    warningTopStack.style.display = 'block';
+    warningTopStack.innerHTML = 'overflow';
   }
 };
 
 const addToStack = () => {
-  // ... your code goes here
+  if (newStack.canPush()) {
+    const item = document.querySelector('.list-stack .inactive')
+    item.className = 'active';
+    item.innerHTML = stackInput.value;
+    newStack.push(item);
+    clearStackInput();
+    warningBottomStack.style.display = 'none';
+    warningBottomStack.innerHTML = '';
+  } else {
+    generateWarningStack('overflow');
+  }
 };
 
 const removeFromStack = () => {
-  // ... your code goes here
+  if (newStack.isEmpty()) {
+    generateWarningStack('underflow');
+  } else {
+    const item = newStack.pop();
+    item.className = 'inactive';
+    item.innerHTML = '';
+    warningTopStack.style.display = 'none';
+    warningTopStack.innerHTML = '';
+  }
 };
 
 addStackBtn.addEventListener('click', addToStack);

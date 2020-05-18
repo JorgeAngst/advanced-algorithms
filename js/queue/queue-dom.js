@@ -8,29 +8,53 @@ const dequeue = document.querySelector('.btn-take-dequeue');
 const queue = new QueueDataStructure();
 
 const clearQueueInput = () => {
-  // ... your code goes here
+  queueInput.value = '';
 };
 
 const generateListQueue = () => {
-  // ... your code goes here
+  for (i = 0; i < queue.MAX_SIZE; i++) {
+    const item = document.createElement('li');
+    item.classList = 'inactive';
+    queueUL.appendChild(item)
+  }
 };
 
 generateListQueue();
 
 const generateWarningQueue = type => {
   if (type === 'underflow') {
-    // ... your code goes here
+    warningBottomQueue.style.display = 'block';
+    warningBottomQueue.innerHTML = 'underflow';
   } else if (type === 'overflow') {
-    // ... your code goes here
+    warningTopQueue.style.display = 'block';
+    warningTopQueue.innerHTML = 'overflow';
   }
 };
 
 const addToQueue = () => {
-  // ... your code goes here
+  if (queue.canEnqueue()) {
+    const item = document.querySelector('.list-queue .inactive');
+    item.className = 'active';
+    item.innerHTML = queueInput.value;
+    queue.enqueue(item);
+    clearQueueInput();
+    warningBottomQueue.style.display = 'none';
+    warningBottomQueue.innerHTML = '';
+  } else {
+    generateWarningQueue('overflow');
+  }
 };
 
 const removeFromQueue = () => {
-  // ... your code goes here
+  if (queue.isEmpty()) {
+    generateWarningQueue('underflow')
+  } else {
+    const item = queue.dequeue();
+    item.className = 'inactive';
+    item.innerHTML = '';
+    warningTopQueue.style.display = 'none';
+    warningTopQueue.innerHTML = '';
+  }
 };
 
 addQueue.addEventListener('click', addToQueue);
